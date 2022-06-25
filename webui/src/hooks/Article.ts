@@ -57,6 +57,8 @@ export const useArticle = () => {
   };
 
   return {
-    articleList
+    articleList,
+    createArticle,
+    getArticleList,
   };
 };
