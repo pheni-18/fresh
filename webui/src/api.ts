@@ -1,28 +1,30 @@
 import axios from 'axios';
-import { Todo, TodoForm } from 'models';
+import { Article, ArticleForm } from 'models';
 
 const client = axios.create({
-  baseURL: 'http://localhost:1323',
+  baseURL: 'http://localhost:8000/api',
   timeout: 3000,
   headers: {'Content-Type': 'application/json',}
 });
 
-export const apiFetchTodoList = async () => {
-  return await client.get<Todo[]>('/todo');
+const prefix = '/articles'
+
+export const apiFetchArticleList = async () => {
+  return await client.get<Article[]>(`${prefix}/`);
 };
 
-export const apiCreateTodo = async (body: TodoForm) => {
-  return await client.post<Todo>('/todo', body);
+export const apiCreateArticle = async (body: ArticleForm) => {
+  return await client.post<Article>(`${prefix}/`, body);
 };
 
-export const apiFetchTodo = async (id: number) => {
-  return await client.get<Todo>(`/todo/${id}`);
+export const apiFetchArticle = async (id: number) => {
+  return await client.get<Article>(`${prefix}/${id}`);
 };
 
-export const apiUpdateTodo = async (id: number, body: TodoForm) => {
-  return await client.patch<Todo>(`/todo/${id}`, body);
+export const apiUpdateArticle = async (id: number, body: ArticleForm) => {
+  return await client.patch<Article>(`${prefix}/${id}`, body);
 };
 
-export const apiDeleteTodo = async (id: number) => {
-  return await client.delete(`/todo/${id}`);
+export const apiDeleteArticle = async (id: number) => {
+  return await client.delete(`${prefix}/${id}`);
 };

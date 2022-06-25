@@ -1,15 +1,10 @@
-export interface Todo {
-  ID: number;
-  CreatedAt: Date;
-  UpdatedAt: Date;
-  DeletedAt: Date;
+export interface Article {
+  id: string;
   title: string;
-  description: string;
-  done: number;
+  body: string;
 }
 
-export interface TodoForm {
+export interface ArticleForm {
   title: string;
-  description: string;
-  done: number;
+  body: string;
 }

@@ -1,16 +1,16 @@
 import React from 'react';
-import { useTodo } from 'hooks/Todo'
+import { useArticle } from 'hooks/Article'
 
 const Home: React.FC = () => {
-  const { todoList } = useTodo();
+  const { articleList } = useArticle();
 
   return (
       <React.Fragment>
         <h1>Home!</h1>
         {
-          todoList && todoList.map((todo) => {
+          articleList && articleList.map((article) => {
             return (
-              <p>{todo.title}</p>
+              <p key={article.id}>{article.title}</p>
             );
           })
         }
