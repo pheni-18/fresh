@@ -1,15 +1,28 @@
-from typing import Optional
-
 from fastapi import FastAPI
-
-app = FastAPI()
-
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+from fastapi.openapi.utils import get_openapi
+from src.presentation.controllers import router
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+api = FastAPI()
+
+api.include_router(router)
+
+
+def custom_openapi():
+    if api.openapi_schema:
+        return api.openapi_schema
+
+    openapi_schema = get_openapi(
+        title='Fresh API',
+        version='1.0.0',
+        description='This is a practice of ddd and onion arch.',
+        routes=api.routes,
+    )
+    openapi_schema['info']['x-logo'] = {
+        'url': 'https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png',
+    }
+    api.openapi_schema = openapi_schema
+    return api.openapi_schema
+
+
+api.openapi = custom_openapi
