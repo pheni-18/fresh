@@ -9,6 +9,11 @@ class AppServiceBindingSpec(pinject.BindingSpec):
             to_class=infra_repositories.UserRepository,
             in_scope=pinject.SINGLETON,
         )
+        bind(
+            'article_repo',
+            to_class=infra_repositories.ArticleRepository,
+            in_scope=pinject.SINGLETON,
+        )
 
     def dependencies(self):
         return [infra_repositories.InfraRepositoryBindingSpec()]
