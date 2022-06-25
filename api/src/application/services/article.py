@@ -18,8 +18,7 @@ class AppArticleService:
         return [ArticleDTO.from_domain(article) for article in articles]
 
     def get(self, id: str) -> ArticleDTO:
-        id_ = domain_models.ArticleID(value=id)
-        article = self._article_repo.get(id_)
+        article = self._article_repo.get(id)
         return ArticleDTO.from_domain(article)
 
     def register(self, article_create_dto: ArticleCreateDTO) -> ArticleDTO:
@@ -31,8 +30,7 @@ class AppArticleService:
         return ArticleDTO.from_domain(article)
 
     def update(self, article_update_dto: ArticleUpdateDTO) -> ArticleDTO:
-        id = domain_models.ArticleID(value=article_update_dto.id)
-        article = self._article_repo.get(id)
+        article = self._article_repo.get(article_update_dto.id)
         if not article_update_dto.title == article.title:
             article.set_title(article_update_dto.title)
 
@@ -43,5 +41,4 @@ class AppArticleService:
         return ArticleDTO.from_domain(article)
 
     def delete(self, id: str):
-        id_ = domain_models.ArticleID(value=id)
-        self._article_repo.delete(id_)
+        self._article_repo.delete(id)

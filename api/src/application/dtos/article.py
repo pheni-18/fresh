@@ -17,7 +17,7 @@ class ArticleDTO(ArticleBaseDTO):
     @classmethod
     def from_domain(cls, article: domain_models.Article):
         return cls(
-            id=article.id.value,
+            id=article.id,
             title=article.title,
             body=article.body,
         )

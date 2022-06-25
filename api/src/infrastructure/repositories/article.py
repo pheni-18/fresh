@@ -20,21 +20,21 @@ class ArticleRepository(domain_interfaces.IArticleRepository):
             db_articles = session.query(Article).all()
             return [
                 domain_models.Article(
-                    id=domain_models.ArticleID(value=db_article.id),
+                    id=db_article.id,
                     title=db_article.title,
                     body=db_article.body,
                 )
                 for db_article in db_articles
             ]
 
-    def get(self, id: domain_models.ArticleID) -> domain_models.Article:
+    def get(self, id: str) -> domain_models.Article:
         with self._session_generator.generate() as session:
             db_article = session.query(Article).filter(Article.id == id.value).first()
             if db_article is None:
                 raise app_exceptions.ArticleNotFoundException()
 
             return domain_models.Article(
-                id=domain_models.ArticleID(value=db_article.id),
+                id=db_article.id,
                 title=db_article.title,
                 body=db_article.body,
             )
@@ -42,7 +42,7 @@ class ArticleRepository(domain_interfaces.IArticleRepository):
     def create(self, article: domain_models.Article):
         with self._session_generator.generate() as session:
             db_article = Article(
-                id=article.id.value,
+                id=article.id,
                 title=article.title,
                 body=article.body,
             )
@@ -51,14 +51,14 @@ class ArticleRepository(domain_interfaces.IArticleRepository):
 
     def update(self, article: domain_models.Article):
         with self._session_generator.generate() as session:
-            db_article = session.query(Article).filter(Article.id == article.id.value).first()
+            db_article = session.query(Article).filter(Article.id == article.id).first()
             if db_article is None:
                 raise app_exceptions.ArticleNotFoundException()
             db_article.title = article.title
             db_article.body = article.body
             session.commit()
 
-    def delete(self, id: domain_models.ArticleID):
+    def delete(self, id: str):
         with self._session_generator.generate() as session:
             db_article = session.query(Article).filter(Article.id == id.value)
             db_article.delete()

@@ -10,7 +10,7 @@ class IArticleRepository(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get(self, id: domain_models.ArticleID) -> domain_models.Article:
+    def get(self, id: str) -> domain_models.Article:
         pass
 
     @abstractmethod
@@ -22,5 +22,5 @@ class IArticleRepository(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def delete(self, id: domain_models.ArticleID):
+    def delete(self, id: str):
         pass
